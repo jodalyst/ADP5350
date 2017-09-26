@@ -4,15 +4,25 @@
 #include <Wire.h>
 
 
-#define 
+#define CHARGER_TIMER_SETTING 0x06
+
+#define BAT_TEMP 0x20
+#define BAT_SOC 0x21
+#define VBAT_READ_H 0x22
+#define VBAT_READ_L 0x23
+#define FUEL_GAUGE_MODE 0x24
+#define SOC_RESET 0x25
 
 
-#define ADO 0
-#if ADO
-#define ADP350_ADDRESS 0x69  
-#else
-#define ADP350_ADDRESS 0x68  
-#endif // AD0
+
+#define LDO_CTRL 0x32
+#define LDO_CFG 0x33
+#define VID_LDO12 0x34
+#define VID_LDO3 0x35
+
+
+#define ADP5350_ADDRESS 0x44  
+
 
 
 class ADP5350
