@@ -37,6 +37,7 @@ class ADP5350
 public:
     // Public method declarations
     ADP5350();
+    bool enableLDO(uint8_t, bool);
     uint8_t writeByte(uint8_t, uint8_t, uint8_t);
     uint8_t readByte(uint8_t, uint8_t);
     uint8_t readBytes(uint8_t, uint8_t, uint8_t, uint8_t *);

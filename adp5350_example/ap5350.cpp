@@ -1,12 +1,27 @@
 #include "adp350.h"
 
-ADP350::ADP350() // Uses I2C communication by default
+ADP5350::ADP5350() // Uses I2C communication by default
 {
   Wire.begin();
 }
 
 
-uint8_t ADP350::writeByte(uint8_t deviceAddress, uint8_t registerAddress,uint8_t data)
+ADP5350::enableLDO(uint8_t ldoNumber, bool on){
+  uint8_t currentSituation = readByte(ADP5350_ADDRESS,LDO_CTRL);
+
+  switch(ldoNumber){
+    case 1: currentSituation = currentSituation ||
+    case 2: Wire.write(VID_LDO12);
+    case 3: Wire.write(VID_LDO3);
+    case default: 
+  }
+  if (ldoNumber==1){
+    Wire.write()
+  }
+
+}
+
+uint8_t ADP5350::writeByte(uint8_t deviceAddress, uint8_t registerAddress,uint8_t data)
 {
   Wire.beginTransmission(deviceAddress);  
   Wire.write(registerAddress);      // where to write
@@ -15,7 +30,7 @@ uint8_t ADP350::writeByte(uint8_t deviceAddress, uint8_t registerAddress,uint8_t
   return NULL;
 }
 
-uint8_t ADP350::readByte(uint8_t deviceAddress, uint8_t registerAddress)
+uint8_t ADP5350::readByte(uint8_t deviceAddress, uint8_t registerAddress)
 {
   uint8_t data; 
 
@@ -34,7 +49,7 @@ uint8_t ADP350::readByte(uint8_t deviceAddress, uint8_t registerAddress)
 }
 
 //Read Bytes (arbitrary length)
-uint8_t ADP350::readBytes(uint8_t deviceAddress, uint8_t registerAddress, uint8_t count, uint8_t * dest)
+uint8_t ADP5350::readBytes(uint8_t deviceAddress, uint8_t registerAddress, uint8_t count, uint8_t * dest)
 {
   // Init:
   Wire.beginTransmission(deviceAddress);
@@ -54,8 +69,7 @@ uint8_t ADP350::readBytes(uint8_t deviceAddress, uint8_t registerAddress, uint8_
 }
 
 
-bool ADP350::begin()
+bool ADP5350::begin()
 {
-  return magInit();
 }
 
