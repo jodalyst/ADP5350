@@ -4,6 +4,10 @@
 #include <Wire.h>
 
 
+
+#define MFGID 0x00
+#define SIREV 0x01
+
 #define CHARGER_TIMER_SETTING 0x06
 
 #define BAT_TEMP 0x20

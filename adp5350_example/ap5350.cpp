@@ -5,7 +5,12 @@ ADP5350::ADP5350() // Uses I2C communication by default
   Wire.begin();
 }
 
-
+uint8_t ADP5350::info(){
+  return readByte(ADP5350_ADDRESS,MFGID);
+}
+uint8_t ADP5350::sirev(){
+  return readByte(ADP5350_ADDRESS,SIREV);
+}
 //endables or disables LDOs adjusts one with affecting others
 bool ADP5350::enableLDO(uint8_t ldoNumber, bool on){
   if (ldoNumber<1 || ldoNumber>3) return false;
