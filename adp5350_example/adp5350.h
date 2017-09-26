@@ -15,6 +15,8 @@
 
 
 
+#define RBAT_30 0x1C
+
 #define LDO_CTRL 0x32
 #define LDO_CFG 0x33
 #define VID_LDO12 0x34

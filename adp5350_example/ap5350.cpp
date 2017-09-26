@@ -10,14 +10,28 @@ ADP5350::enableLDO(uint8_t ldoNumber, bool on){
   uint8_t currentSituation = readByte(ADP5350_ADDRESS,LDO_CTRL);
 
   switch(ldoNumber){
-    case 1: currentSituation = currentSituation ||
-    case 2: Wire.write(VID_LDO12);
-    case 3: Wire.write(VID_LDO3);
+    case 1: currentSituation = on?currentSituation & ~(0):currentSituation & ~(1);
+    case 2: currentSituation = on?currentSituation & ~(0):currentSituation & ~(1);
+    case 3: currentSituation = on?currentSituation & ~(0):currentSituation & ~(1);
     case default: 
   }
   if (ldoNumber==1){
     Wire.write()
   }
+
+}
+
+//returns battery voltage in millivolts
+ADP5350::batteryVoltage(){
+  uint8_t voltageLow = readByte(ADP5350_ADDRESS, VBAT_READ_L);
+  uint8_t voltageHigh = readByte(ADP5350_ADDRESS, VBAT_REAL_H);
+  uint16_t voltageBattery = 32*voltageHigh + voltageLow/8;
+  return voltageBattery;
+}
+
+ADP5350::batteryCurrent(){
+  uint16_t bV = batteryVoltage();
+  u
 
 }
 
