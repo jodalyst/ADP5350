@@ -1,8 +1,10 @@
 
-#ifndef _adp350_H_
-#define _adp350_H_
+#ifndef _adp5350_H_
+#define _adp5350_H_
 #include <Wire.h>
 
+
+#define 
 
 
 #define ADO 0
@@ -13,7 +15,7 @@
 #endif // AD0
 
 
-class MPU9250
+class ADP5350
 {
   private:
 
@@ -24,11 +26,11 @@ class MPU9250
     void deselect();
 public:
     // Public method declarations
-    ADP350();
+    ADP5350();
     uint8_t writeByte(uint8_t, uint8_t, uint8_t);
     uint8_t readByte(uint8_t, uint8_t);
     uint8_t readBytes(uint8_t, uint8_t, uint8_t, uint8_t *);
     bool begin();
 };
 
-#endif // _adp350_H
+#endif // _adp5350_H
