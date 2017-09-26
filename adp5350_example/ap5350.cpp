@@ -6,19 +6,15 @@ ADP5350::ADP5350() // Uses I2C communication by default
 }
 
 
-ADP5350::enableLDO(uint8_t ldoNumber, bool on){
+//endables or disables LDOs adjusts one with affecting others
+bool ADP5350::enableLDO(uint8_t ldoNumber, bool on){
+  if (ldoNumber<1 || ldoNumber>3) return false;
   uint8_t currentSituation = readByte(ADP5350_ADDRESS,LDO_CTRL);
-
-  switch(ldoNumber){
-    case 1: currentSituation = on?currentSituation & ~(0):currentSituation & ~(1);
-    case 2: currentSituation = on?currentSituation & ~(0):currentSituation & ~(1);
-    case 3: currentSituation = on?currentSituation & ~(0):currentSituation & ~(1);
-    case default: 
-  }
-  if (ldoNumber==1){
-    Wire.write()
-  }
-
+  uint8_t command = 1<<(ldoNumber-1);
+  if (on) command = currentSituation | command;
+  else command = currentSituation & ~(command);
+  writeByte(ADP5350,LDO_CTRL,currentSituation);
+  return true;
 }
 
 //returns battery voltage in millivolts
@@ -29,11 +25,7 @@ ADP5350::batteryVoltage(){
   return voltageBattery;
 }
 
-ADP5350::batteryCurrent(){
-  uint16_t bV = batteryVoltage();
-  u
 
-}
 
 uint8_t ADP5350::writeByte(uint8_t deviceAddress, uint8_t registerAddress,uint8_t data)
 {
@@ -47,33 +39,21 @@ uint8_t ADP5350::writeByte(uint8_t deviceAddress, uint8_t registerAddress,uint8_
 uint8_t ADP5350::readByte(uint8_t deviceAddress, uint8_t registerAddress)
 {
   uint8_t data; 
-
-  // Init
   Wire.beginTransmission(deviceAddress);
-  //Point the device to its register that we want to read eventually
   Wire.write(registerAddress);
-  // halt
   Wire.endTransmission(false);
-  // Read one byte from slave register address
   Wire.requestFrom(deviceAddress, (uint8_t) 1);
-  // Fill Rx buffer with result
   data = Wire.read();
-  // Return data read from slave register
   return data;
 }
 
 //Read Bytes (arbitrary length)
 uint8_t ADP5350::readBytes(uint8_t deviceAddress, uint8_t registerAddress, uint8_t count, uint8_t * dest)
 {
-  // Init:
   Wire.beginTransmission(deviceAddress);
-  //Point the device to its register that we want to read eventually
   Wire.write(registerAddress);
-  // halt write, 
   Wire.endTransmission(false);
-
   uint8_t i = 0;
-  // ask values
   Wire.requestFrom(deviceAddress, count);
   while (Wire.available())
   {
