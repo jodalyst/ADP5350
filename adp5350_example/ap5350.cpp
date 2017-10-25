@@ -11,6 +11,7 @@ uint8_t ADP5350::info() {
 uint8_t ADP5350::sirev() {
   return readByte(ADP5350_ADDRESS, SIREV);
 }
+
 //endables or disables LDOs adjusts one with affecting others
 bool ADP5350::enableLDO(uint8_t ldoNumber, bool on) {
   if (ldoNumber < 1 || ldoNumber > 3) return false;
@@ -18,7 +19,61 @@ bool ADP5350::enableLDO(uint8_t ldoNumber, bool on) {
   uint8_t command = 1 << (ldoNumber - 1);
   if (on) command = currentSituation | command;
   else command = currentSituation & ~(command);
-  writeByte(ADP5350_ADDRESS, LDO_CTRL, currentSituation);
+  writeByte(ADP5350_ADDRESS, LDO_CTRL, command);
+  return true;
+}
+
+/////////////////////////////////////////// 
+//                                       //
+// Possible Voltage values for LDOs      //
+//                                       //
+//  0000 = 4.20 V.                       //                  
+//  0001 = 3.60 V.                       //
+//  0010 = 3.30 V.                       //
+//  0011 = 3.15 V.                       //
+//  0100 = 3.00 V.                       //
+//  0101 = 2.85 V.                       //
+//  0110 = 2.50 V.                       //
+//  0111 = 2.30 V.                       //
+//  1000 = 2.10 V.                       //
+//  1001 = 1.80 V.                       //
+//  1010 = 1.50 V.                       //
+//  1011 = 1.40 V.                       //
+//  1100 = 1.30 V.                       //
+//  1101 = 1.20 V.                       //
+//  1110 = 1.10 V.                       //
+//  1111 = 1.00 V.                       //
+//                                       //
+///////////////////////////////////////////
+
+bool ADP5350::voltage_LDO(uint8_t ldoNumber, uint8_t voltage){
+  if (voltage > 15) return false; // can't be more than 4 bits
+  uint8_t currentSituation, command;
+  switch (ldoNumber)
+  {
+    case 1:
+      {
+        currentSituation = (readByte(ADP5350_ADDRESS, VID_LDO12) & 0xF0); // mask to keep LDO 2 unchanged
+        command = currentSituation | voltage;
+        writeByte(ADP5350_ADDRESS, VID_LDO12, command);
+      }
+      break;
+      
+    case 2:
+      {
+        currentSituation = (readByte(ADP5350_ADDRESS, VID_LDO12) & 0x0F); // mask to keep LDO 1 unchanged
+        command = currentSituation | (voltage << 4);
+        writeByte(ADP5350_ADDRESS, VID_LDO12, command);
+      }
+      break;
+      
+    case 3:
+      writeByte(ADP5350_ADDRESS, VID_LDO3, voltage); // no masking require
+      break;
+      
+    default:
+      return false;
+  }
   return true;
 }
 
@@ -32,13 +87,13 @@ uint16_t ADP5350::batteryVoltage() {
 
 
 
-uint8_t ADP5350::writeByte(uint8_t deviceAddress, uint8_t registerAddress, uint8_t data)
+void ADP5350::writeByte(uint8_t deviceAddress, uint8_t registerAddress, uint8_t data)
 {
   Wire.beginTransmission(deviceAddress);
   Wire.write(registerAddress);      // where to write
   Wire.write(data);                 // send data (one byte remember)
   Wire.endTransmission();           // done
-  return NULL;
+  return;
 }
 
 uint8_t ADP5350::readByte(uint8_t deviceAddress, uint8_t registerAddress)

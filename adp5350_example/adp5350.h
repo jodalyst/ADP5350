@@ -4,7 +4,6 @@
 #include <Wire.h>
 
 
-
 #define MFGID 0x00
 #define SIREV 0x01
 
@@ -44,7 +43,10 @@ public:
     // Public method declarations
     ADP5350();
     bool enableLDO(uint8_t, bool);
-    uint8_t writeByte(uint8_t, uint8_t, uint8_t);
+
+    bool voltage_LDO(uint8_t, uint8_t);
+    
+    void writeByte(uint8_t, uint8_t, uint8_t);
     uint8_t readByte(uint8_t, uint8_t);
     uint8_t readBytes(uint8_t, uint8_t, uint8_t, uint8_t *);
     uint16_t batteryVoltage();
