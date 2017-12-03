@@ -1,6 +1,5 @@
 #include "adp5350.h"
 
-
 // Set up the oled object
 const int BIT_DEPTH = 16;
 int LOOP_SPEED = 100; // milliseconds
@@ -21,7 +20,7 @@ void setup() {
 
 void loop() {
   bool work;
-  Serial.println("READING REGISTERS AND BATTERY VOLTAGE");
+  Serial.println("READING REGISTERS AND  BATTERY VOLTAGE");
   Serial.print("Model ID: "); Serial.println( adp.info()&0xF ); // Model ID
   Serial.print("Manufacturing ID: "); Serial.println( adp.info()>>4 ); // Manufacturing ID
   Serial.print("Silicon Revision: "); Serial.println( adp.sirev() ); // Silicon Revision
@@ -31,20 +30,25 @@ void loop() {
 
   // Testing LDO enabling
   Serial.println("TESTING LDO FUNCTIONALITY");
-  work = adp.enableLDO(1, 0);
-  if (work) Serial.println("Shutting LDO 1 off ...");
-  delay(5000);
-  work = adp.enableLDO(1, 1);
-  if (work) Serial.println("Turning LDO 1 on ...");
-  delay(5000);
-
+  work = adp.enableLDO(3, 1);
+  if (work) Serial.println("Shutting LDO 3 on ...");
+  delay(500);
+  work = adp.enableLDO(3, 0);
+  if (work) Serial.println("Turning LDO 3 off ...");
+  delay(500);
+  work = adp.enableLDO(3, 1);
+  if (work) Serial.println("Shutting LDO 3 on ...");
+  delay(500);
   // Testing LDO Voltage(s)
-  work = adp.voltage_LDO(1, 15); // change voltage to 1 V
-  if (work) Serial.println("Changing Voltage of LDO 1 to 1.0 V ...");
+  work = adp.voltage_LDO(3, 15); // change voltage to 1 V
+  if (work) Serial.println("Changing Voltage of LDO 3 to 1.0 V ...");
+  delay(500);
+  work = adp.voltage_LDO(3, 2); // change back to 3.3 V
+  if (work) Serial.println("Changing Voltage of LDO 3 to 3.3 V ...");
   delay(5000);
-  work = adp.voltage_LDO(1, 2); // change back to 3.3 V
-  if (work) Serial.println("Changing Voltage of LDO 1 to 3.3 V ...");
-  delay(5000);
+  work = adp.enableLDO(3, 0);
+  if (work) Serial.println("Turning LDO 3 off ...");
+  delay(500);
 
   // Testing LD0 enabling
   work = adp.enableLDO(2, 1);
@@ -53,5 +57,5 @@ void loop() {
   work = adp.enableLDO(2, 0);
   if (work) Serial.println("Shutting LDO 2 off ...");
   Serial.println("\n");
-  delay(5000);
+  delay(500);
 }
