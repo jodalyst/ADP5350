@@ -8,6 +8,7 @@
 #define SIREV 0x01
 
 #define CHARGER_TIMER_SETTING 0x06
+#define CHARGER_FUNCTION_SETTING1 0x07
 
 #define BAT_TEMP 0x20
 #define BAT_SOC 0x21
@@ -16,7 +17,7 @@
 #define FUEL_GAUGE_MODE 0x24
 #define SOC_RESET 0x25
 
-
+#define BAT_SOC 0x21
 
 #define RBAT_30 0x1C
 
@@ -43,8 +44,12 @@ public:
     // Public method declarations
     ADP5350();
     bool enableLDO(uint8_t, bool);
-
     bool voltage_LDO(uint8_t, uint8_t);
+    bool setCharger(bool);
+    uint8_t enableFuelGauge(bool);
+    bool resetSOC();
+
+    uint8_t getSOC();
     
     void writeByte(uint8_t, uint8_t, uint8_t);
     uint8_t readByte(uint8_t, uint8_t);
