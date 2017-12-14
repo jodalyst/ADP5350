@@ -29,18 +29,19 @@
 
 #define ADP5350_ADDRESS 0x44  
 
+#define DEBUG false
+
 
 
 class ADP5350
 {
   private:
-
     uint8_t writeByteWire(uint8_t, uint8_t, uint8_t);
     uint8_t readByteWire(uint8_t address, uint8_t subAddress);
 
     void select();
     void deselect();
-public:
+  public:
     // Public method declarations
     ADP5350();
     bool enableLDO(uint8_t, bool);

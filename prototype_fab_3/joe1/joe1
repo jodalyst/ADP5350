@@ -1,0 +1,31 @@
+Source,/Users/jodalyst/joe1/joe1.sch
+Kicad Rev,Eeschema 4.0.6
+Generated Date,Wednesday, December 13, 2017 'PMt' 09:12:32 PM
+
+Title,test1
+Company,Not Set
+Revision,Not Set
+Date Issue,Not Set
+
+Reference,Value,Field4,Library,Library Ref
+U1,ADP5350,adp5350,ADP5350
+J1,JST_2MM_MALE,CONN-11443,SparkFun-Connectors,JST_2MM_MALE
+C9,2.2u,device,C
+L1,1.5u,device,L
+C6,10u,device,C
+C4,10u,device,C
+C1,1u,device,C
+C3,1u,device,C
+C2,1u,device,C
+R2,0.5,device,R
+R3,0.5,device,R
+R4,0.5,device,R
+R5,4.7k,device,R
+R6,4.7k,device,R
+C5,4.7u,device,C
+C8,2.2u,device,C
+C7,1u,device,C
+J2,CONN_08LOCK,XXX-00000,SparkFun-Connectors,CONN_08LOCK
+J3,CONN_06LOCK,XXX-00000,SparkFun-Connectors,CONN_06LOCK
+J4,CONN_04,CONN-09696,SparkFun-Connectors,CONN_04
+R1,47K,device,R
