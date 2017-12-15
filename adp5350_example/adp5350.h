@@ -29,7 +29,7 @@
 
 #define ADP5350_ADDRESS 0x44  
 
-#define DEBUG false
+#define DEBUG true
 
 
 
