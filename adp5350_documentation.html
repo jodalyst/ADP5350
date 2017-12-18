@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<title>PowBoard Doc</title>
+
+<body>
+<xmp theme="simplex" style="display:none;">
+# 6.08 PowBoard Documentation
+
+## Rev. 0
+
+The 6.08 Power Board is based around the <a href="http://www.analog.com/media/en/technical-documentation/data-sheets/ADP5350.pdf" target="_blank">ADP5350 Battery Management Chip</a>.  It provides an I2C-based ability to control charging/discharging and regulation of a small-to-medium lithium-polymer battery, as well as the ability to route/control the power to up to three separate circuit blocks with independently-regulatable voltages using LDOs.
+
+<center>
+	<img src="media/powboardv0.jpg" width="400"/>
+</center>
+
+### Pin Descriptions
+
+The ADP5350 has 32 pins (33 if you count its large contact electrode located on the underside).  We only need to break out a certain subset for our functionality:
+
+* **5V:** USB voltage for the board
+* **GND:** Electrical Ground for the board
+* **SCL:** Serial Clock Pin for I2C communication (4.7kOhm pullup included)
+* **SDA:** Serial Data Pin for I2C communication (4.7kOhm pullup included)
+* **LDO1A:** LDO1 output (before sense resistor)
+* **LDO1B:** LDO1 output (after sense resistor)
+* **LDO2A:** LDO2 output (before sense resistor)
+* **LDO2B:** LDO2 output (after sense resistor)
+* **LDO3A:** LDO3 output (before sense resistor)
+* **LDO3B:** LDO3 output (after sense resistor)
+
+
+
+### Software
+
+
+### Basic Operation
+
+Instantiate a battery controller first and foremost.
+
+```
+ADP5350 adp;
+```
+
+Then the 
+
+</xmp>
+
+</body>
+
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+
+</html>
