@@ -18,7 +18,7 @@ bool ADP5350::setCharger(bool on){
   else currentSituation = currentSituation & ~(on);
   writeByte(ADP5350_ADDRESS, CHARGER_FUNCTION_SETTING1, currentSituation);
   currentSituation = readByte(ADP5350_ADDRESS, CHARGER_FUNCTION_SETTING1);
-  if (DEBUG) Serial.println(currentSituation);
+  //if (DEBUG) Serial.println(currentSituation);
   return true;
   
 }
@@ -34,7 +34,7 @@ uint8_t ADP5350::enableFuelGauge(bool on){
   if (on) fuel_command = currentSituation | on;
   else fuel_command = currentSituation & ~(on);
   writeByte(ADP5350_ADDRESS, FUEL_GAUGE_MODE, fuel_command);
-  if (DEBUG) Serial.println(fuel_command);
+  //if (DEBUG) Serial.println(fuel_command);
   return fuel_command;
 }
 
@@ -42,7 +42,7 @@ uint8_t ADP5350::enableFuelGauge(bool on){
 bool ADP5350::resetSOC(){
   uint8_t reset_command = 128;
   writeByte(ADP5350_ADDRESS, SOC_RESET, reset_command);
-  if (DEBUG) Serial.println(reset_command);
+  //if (DEBUG) Serial.println(reset_command);
   return true;
 }
 
@@ -51,13 +51,13 @@ bool ADP5350::enableLDO(uint8_t ldoNumber, bool on) {
   if (ldoNumber < 1 || ldoNumber > 3) return false;
   uint8_t currentSituation;
   currentSituation = readByte(ADP5350_ADDRESS, LDO_CTRL);
-  if (DEBUG) Serial.print("Current: "); Serial.println(currentSituation);
+  //if (DEBUG) Serial.print("Current: "); Serial.println(currentSituation);
   uint8_t command = 1 << (ldoNumber - 1);
   if (on) command = currentSituation | command;
   else command = currentSituation & ~(command);
   writeByte(ADP5350_ADDRESS, LDO_CTRL, command);
   currentSituation = readByte(ADP5350_ADDRESS, LDO_CTRL);
-  if (DEBUG) Serial.print("Set to: "); Serial.println(currentSituation);
+  //if (DEBUG) Serial.print("Set to: "); Serial.println(currentSituation);
   return true;
 }
 
