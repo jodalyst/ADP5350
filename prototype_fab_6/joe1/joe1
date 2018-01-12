@@ -1,0 +1,15 @@
+Reference, Value, Footprint, Datasheet, Field4
+8
+"R5","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"R6","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"C5","4.7u","Capacitors_SMD:C_0805_HandSoldering",""
+"R1","47K","Resistors_SMD:R_0805_HandSoldering",""
+"R9","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"R8","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"D1","LED","LEDs:LED_0805_HandSoldering",""
+"R7","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"D2","LED","LEDs:LED_0805_HandSoldering",""
+"D3","LED","LEDs:LED_0805_HandSoldering",""
+"R11","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"R10","4.7k","Resistors_SMD:R_0805_HandSoldering",""
+"R12","4.7k","Resistors_SMD:R_0805_HandSoldering",""

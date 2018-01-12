@@ -59,6 +59,8 @@ void setup() {
   pinMode(15,OUTPUT);
   digitalWrite(15,LOW);
   delay(1000); // give MCU time to print the first text block
+  //adp.enableLDO(2, 0);
+
 }
 
 void loop() {
