@@ -1,23 +1,36 @@
-#include "adp5350.h"
 #include <WiFi.h>
+#include "adp5350.h"
+#include <U8g2lib.h>
 
 //tests posting of data to a server for battery voltage tracking over time
 
-const char* ssid     = "6s08";
-const char* password = "iesc6s08";
+
+U8G2_SH1106_128X64_NONAME_F_4W_HW_SPI oled(U8G2_R0, 5, 17, 16);
+
+const char* ssid     = "J2";
+const char* password = "18611865";
 
 const char* host = "iesc-s3.mit.edu";
 
-#define ID 5656
+#define ID 3017
 
 
 //declare instance of ADP5350 class
 ADP5350 adp;
 
 void setup() {
+  delay(2000);
   Serial.begin(115200); // for debugging if needed.
+  adp.enableLDO(1, 1);
+  adp.enableLDO(2, 1);
+
   WiFi.begin(ssid, password);
-  
+  oled.begin();     // initialize the OLED
+  oled.clearBuffer();    //clear the screen contents
+  oled.setFont(u8g2_font_ncenB10_tr);    
+  oled.setCursor(0,15);
+  oled.print("Starting");
+  oled.sendBuffer();
   while (WiFi.status() != WL_CONNECTED) {
       delay(500);
       Serial.print(".");
@@ -27,7 +40,7 @@ void setup() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-
+  oled_print(String(WiFi.localIP()));
   
   Wire.begin(); //
   delay(1000);
@@ -54,7 +67,9 @@ void loop() {
     WiFiClient client;
     if (!client.connect(host, 80)) {
         Serial.println("connection failed");
+        oled_print("connfail");
     }else{
+        oled_print("in");
       String data = "{\"id\": "+String(ID)+",\"voltage\":"+String(voltage)+"}";
       Serial.println("Sending");
       client.println("POST /esp32test/reportBattery HTTP/1.1");
@@ -74,6 +89,7 @@ void loop() {
       client.print("\r\n\r\n");
       Serial.print("\r\n\r\n");
       unsigned long timeout = millis();
+      oled_print("done post");
       while (client.available() == 0) {
           if (millis() - timeout > 5000) {
               Serial.println(">>> Client Timeout !");
@@ -81,6 +97,7 @@ void loop() {
               break;
           }
       } 
+      oled_print("got response");
       // Read all the lines of the reply from server and print them to Serial
       while(client.available()) {
           String line = client.readStringUntil('\r');
@@ -89,9 +106,20 @@ void loop() {
   
       Serial.println();
       Serial.println("closing connection");
+      oled_print("got it");
       }
   digitalWrite(15,1);
   delay(10000);
   digitalWrite(15,0);
 
 }
+
+
+void oled_print(String input){
+  oled.clearBuffer();
+  oled.setCursor(0,15);
+  oled.print(input);
+  oled.sendBuffer();     // update the screen
+
+}
+
